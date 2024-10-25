@@ -1,0 +1,93 @@
+#a
+!pip install names #install the packae
+import names as n #import the package with alias
+list_names=[] 
+for i in range(100):
+  list_names.append(n.get_full_name()) #create a list with 100 full names
+#b
+print(list_names[90:])#the last 10 names of the list using slicing 
+#c
+list_names.insert(0,'Moustafa Elmehy')
+list_names.insert(1,'Ali Elsahfey') #adding our names to the list and ensure that the list will extend
+
+
+print(len(list_names))
+#d
+def abkurz(fullname): #function to take the first letter of the first and last name 
+  name = fullname.split()
+  fname_letter = name[0][0]
+  lname_letter = name[-1][0]
+  return fname_letter+'.'+lname_letter+'.'
+
+list_names_abbreviations = [abkurz(name) for name in list_names] #using the function
+print(list_names_abbreviations)
+
+#e
+i=1
+list_names_abbreviations_duplicates =[]
+for dup in list_names_abbreviations:
+  for num in range(i,len(list_names_abbreviations)):
+    if dup == list_names_abbreviations[num] :
+      if dup not in list_names_abbreviations_duplicates:
+        list_names_abbreviations_duplicates.append(dup)
+  i+=1
+
+
+print(list_names_abbreviations_duplicates) #the duplicates
+print(len(list_names_abbreviations_duplicates)) #the number of duplicates
+
+list_names_abbreviations_unique =[]
+for name in list_names_abbreviations:
+    if name not in list_names_abbreviations_duplicates and name not in list_names_abbreviations_unique:
+        list_names_abbreviations_unique.append(name)
+
+
+print(list_names_abbreviations_unique) #the unique names
+print(len(list_names_abbreviations_unique)) #the number of unique names
+
+  
+
+
+#f
+#f.1
+# iam not sure about the soltion therefore i wrote two codes 
+
+#the first soltion
+dict_names = {}
+
+for i, abbr in enumerate(list_names_abbreviations):
+    full_name = list_names[i]  # Get the corresponding full name
+    
+    # If abbreviation already in dictionary, append the name to the list
+    if abbr in dict_names:
+        dict_names[abbr].append(full_name)
+    # If abbreviation is new, create a new list with the current name
+    else:
+        dict_names[abbr] = [full_name]
+
+print(dict_names)
+
+#the second solution
+dict_names1 ={abb:[]for abb in list_names_abbreviations_unique}
+
+for i,abb in enumerate(list_names_abbreviations_unique):
+  dict_names1[abb].append(list_names[i])
+
+print(dict_names1)
+#f.2
+personal_abb='M.E.'
+if personal_abb in dict_names: #test if the abberviation exsists in the dictionary
+  print(f'name with abberviation {personal_abb} is {dict_names[personal_abb]}') 
+else:
+  print(f'name with abberviation {personal_abb} is not found')
+
+#g
+#g.1 : The map() function in Python applies a given function to each item in a list (or another collection) and returns the results as a new iterable object
+
+list_names_abbreviations = list(map(abkurz,list_names))
+print(list_names_abbreviations)
+#g.2
+#The advantage of using map(), filter(), and reduce() is that they let us transform and filter data in a simple, clear sequence without needing extra loops or temporary lists. By chaining them together, we can process data step-by-step.
+
+
+    
